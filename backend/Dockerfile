@@ -1,13 +1,14 @@
 FROM ubuntu:latest
-LABEL maintainer="docker@opencrx.org"
-ENV VERSION=6.0.0
-ENV PLATFORM=jre-21
-ENV HOME=/root
-ENV TOMEE_BASEDIR=apache-tomee-plus-10.0.0
+MAINTAINER docker@opencrx.org
+ENV VERSION 6.0.0
+ENV PLATFORM jre-21
+ENV HOME /root
+ENV TOMEE_BASEDIR apache-tomee-plus-10.0.0
 
 # Install ant, jdk, apache2
 RUN apt-get update
-RUN apt-get -y install software-properties-common
+RUN apt-get -y install \
+  software-properties-common
 
 RUN add-apt-repository ppa:openjdk-r/ppa && apt-get update && apt-get -y install \
   net-tools \
@@ -36,7 +37,7 @@ RUN chmod a+x /docker-entrypoint.sh
 
 # Create and set user opencrx
 RUN useradd -m opencrx
-ENV HOME=/home/opencrx
+ENV HOME /home/opencrx
 RUN ls -al $HOME
 
 # Get openCRX from build
@@ -56,4 +57,4 @@ RUN mkdir $HOME/opt \
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 EXPOSE 80 8001 8009
-CMD ["/bin/bash", "-c", "cd /home/opencrx/opt/opencrx/$TOMEE_BASEDIR/bin && export JDKPath=/usr/lib/jvm/java-21-openjdk-amd64 && ./opencrx.sh run"]
+CMD cd /home/opencrx/opt/opencrx/$TOMEE_BASEDIR/bin;export JDKPath=/usr/lib/jvm/java-21-openjdk-amd64;./opencrx.sh run
