@@ -1,0 +1,18 @@
+{{title}}
+
+<ng-container *ngIf="accounts$ | async as accounts">
+  <ng-container *ngIf="accounts.length; else noAccounts">
+    <app-account-list [accounts]="accounts"></app-account-list>
+  </ng-container>
+  <ng-template #noAccounts>
+    <p>No accounts found.</p>
+  </ng-template>
+</ng-container>
+
+<ng-container *ngIf="!accounts$">
+  <p>Loading...</p>
+</ng-container>
+
+<ng-container *ngIf="error$ | async as error">
+  <p>Error: {{ error }}</p>
+</ng-container>
