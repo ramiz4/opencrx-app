@@ -2,5 +2,8 @@
 .DS_Store
 Thumbs.db
 
+# IDE files
+.idea/
+
 # All jar files
 backend/*.jar
